@@ -1,0 +1,9 @@
+edit notes
+
+color to alpha white
+
+image - convert color space grascale
+
+adjust -hsv adjustmet - lightness 0
+
+crop - x 98 width 59

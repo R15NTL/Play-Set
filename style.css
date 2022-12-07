@@ -1,0 +1,103 @@
+body {
+    background-color: rgb(239, 239, 157);
+    font-family: 'Poppins', sans-serif;
+}
+
+.gameContainer {
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(72, 72, 72);
+    max-width: 520px;
+}
+
+.gameStatsBar {
+    font-size: 20px;
+    padding: 15px 10px 0 10px;
+    color: whitesmoke;
+}
+
+#cardCounter {
+    display: inline-block;
+    position: absolute;
+    top: 21px;
+    margin-left: 10px;
+}
+
+.cardsIcon {
+    display: inline-block;
+    height: 25px;
+}
+
+.gameOver {
+    display: inline-block;
+}
+
+.setCardsContainer {
+
+    min-height: 100px;
+    
+    padding: 5px;
+}
+
+
+
+.setCard {
+    
+    background-color: rgb(207, 197, 130);
+    height: 70px;
+    max-width: 33.33%;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    border-radius: 5px;
+    margin: 5px 5px 5px 5px;
+}
+
+.rowOfCards {
+    display: flex;
+}
+
+.setCardImg {
+    height: 100%;
+    margin: 0 3% 0 3%;
+    
+}
+
+.redCard {
+    filter: invert(19%) sepia(91%) saturate(2154%) hue-rotate(343deg) brightness(100%) contrast(94%);
+}
+
+.purpleCard {
+    filter: invert(14%) sepia(14%) saturate(7486%) hue-rotate(258deg) brightness(97%) contrast(104%);
+}
+
+.greenCard {
+    filter: invert(27%) sepia(78%) saturate(843%) hue-rotate(75deg) brightness(98%) contrast(86%)
+}
+
+
+.cardIsClicked {
+    border-style: solid;
+    border-width: 5px;
+    border-color: blue;
+}
+
+@media screen and (min-width: 400px) {
+    .setCard {
+        height: 80px;
+    }
+}
+
+@media screen and (min-width: 450px) {
+    .setCard {
+        height: 90px;
+    }
+}
+
+@media screen and (min-width: 520px) {
+    .setCard {
+        height: 100px;
+    }
+}
+
+
