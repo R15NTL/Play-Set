@@ -1,13 +1,13 @@
 body {
-    background-color: rgb(239, 239, 157);
+    background-color: rgb(72, 72, 72);
     font-family: 'Poppins', sans-serif;
 }
 
 .gameContainer {
     margin-right: auto;
     margin-left: auto;
-    background-color: rgb(72, 72, 72);
     max-width: 520px;
+
 }
 
 .gameStatsBar {
