@@ -318,18 +318,16 @@ function calculateNumberOfSetsOnTable() {
   //CHECKCARD 1
   var col1 = 0;
   for (row1 = 0; row1 < virtualSetTable.length; row1++) {
-    if (col1 >= 2) {
-      col1 = 0;
-      continue;
-    }
     for (;;) {
       checkCard1 = virtualSetTable[row1][col1];
       //NOW THE PROGRAM WILL RULE OUT THIS CARD BY CHECKING IT AGAINST EVERY OTHER CARD THAT IS NOT YET RULED OUT.
       //CHECKCARD 2
       var col2 = col1 + 1;
+      var col2EndOfLineSkippedToNextLine = false;
       for (row2 = row1; row2 < virtualSetTable.length; row2++) {
-        if (col2 >= 2) {
+        if (col1 >= 2 && col2EndOfLineSkippedToNextLine == false) {
           col2 = 0;
+          col2EndOfLineSkippedToNextLine = true;
           continue;
         }
         //INCREMENT COLUMN;
@@ -338,16 +336,19 @@ function calculateNumberOfSetsOnTable() {
           //NOW THE PROGRAM WILL RULE OUT THIS CARD BY CHECKING IT AGAINST EVERY OTHER CARD THAT IS NOT YET RULED OUT.
           //CHECKCARD 3
           var col3 = col2 + 1;
+          var col3EndOfLineSkippedToNextLine = false;
           for (row3 = row2; row3 < virtualSetTable.length; row3++) {
-            if (col2 >= 2) {
+            if (col2 >= 2 && col3EndOfLineSkippedToNextLine == false) {
               col3 = 0;
+              col3EndOfLineSkippedToNextLine = true;
               continue;
             }
             //''
             //INCREMENT COLUMN;
             for (;;) {
               checkCard3 = virtualSetTable[row3][col3];
-              /* THIS IS TO OUTPUT THE CARD THE PROGRAM IS CHECKING TO THE CONSOLE, DELETE IF NECESSARY.
+              /*
+              //THIS IS TO OUTPUT THE CARD THE PROGRAM IS CHECKING TO THE CONSOLE, DELETE IF NECESSARY.
               console.log(
                 "Checked card; row:" +
                   row1 +
@@ -363,7 +364,7 @@ function calculateNumberOfSetsOnTable() {
                   col3 +
                   "."
               );
-              //*/
+              */
               if (
                 isThisASet(
                   checkCard1.arrId,
@@ -400,7 +401,7 @@ function calculateNumberOfSetsOnTable() {
                     col3 +
                     ")"
                 );
-                */
+                //*/
               }
               col3++;
               if (col3 > 2) {
@@ -540,8 +541,6 @@ function cardWasClicked(rowPos, colPos) {
   var thisClickedCardListConverter = rowPos * 3 + colPos;
   var clickedCardHTMLList = document.getElementsByClassName("cardIsClicked");
   var currentClickedPos = [];
-
-  console.log(setCardHTMLList);
 
   function getRowNumber(listPos) {
     var out = 0;
