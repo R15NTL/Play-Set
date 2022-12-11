@@ -75,6 +75,8 @@ body {
 .setCardImg {
     height: 100%;
     margin: 0 2% 0 2%;
+    -webkit-user-drag: none;
+    user-select: none;
     
 }
 
