@@ -1,9 +1,10 @@
-edit notes
+edit notes:
 
-color to alpha white
 
-image - convert color space grascale
+color to alpha white with a threshold of 75
 
-adjust -hsv adjustmet - lightness 0
+image - convert color space grascale/alpha
 
-crop - x 98 width 59
+adjust -hsv adjustmet - lightness -75
+
+crop - x 95 width 67

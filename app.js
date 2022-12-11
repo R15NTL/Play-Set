@@ -20,7 +20,7 @@ function createSetCards() {
 
     */
 
-  for (i = 0; i <= 80; i++) {
+  for (var i = 0; i <= 80; i++) {
     if (i == 0) {
       setCards[0] = {
         arrId: 0,
@@ -179,6 +179,7 @@ function createVirtualSetTable() {
   }
 
   checkForSetsOrAddLine();
+  startTimer();
 
   console.log("Number Of Table Rows: " + virtualSetTable.length);
   console.log("Number Of Sets On Table: " + calculateNumberOfSetsOnTable());
@@ -221,8 +222,7 @@ function consoleFindSet(
     newCards[2]*/
 
     if (usedCardCounter == 81 && calculateNumberOfSetsOnTable == 0) {
-      endOfGame = true;
-      //ADD END OF GAME FUNCTION
+      endGame();
       return;
     }
 
@@ -241,8 +241,7 @@ function consoleFindSet(
 
       //NOT NEEDED
       if (virtualSetTable.length == 0) {
-        endOfGame = true;
-        //ADD END OF GAME FUNCTION
+        endGame();
         return;
       }
       //FIND WAITING CARDS AND REPLACE WITH CARDS FROM ARRAY LINE 4 (5TH LINE DOWN)
@@ -294,8 +293,7 @@ function consoleFindSet(
     }
 
     if (usedCardCounter == 81 && calculateNumberOfSetsOnTable == 0) {
-      endOfGame = true;
-      //ADD END OF GAME FUNCTION
+      endGame();
       return;
     }
 
@@ -431,8 +429,7 @@ function calculateNumberOfSetsOnTable() {
 function checkForSetsOrAddLine() {
   if (calculateNumberOfSetsOnTable() == 0) {
     if (usedCardCounter == 81) {
-      endOfGame = true;
-      //ADD END OF GAME FUNCTION
+      endGame();
       return;
     }
 
@@ -441,8 +438,7 @@ function checkForSetsOrAddLine() {
     console.log(virtualSetTable);
     if (calculateNumberOfSetsOnTable() == 0) {
       if (usedCardCounter == 81) {
-        endOfGame = true;
-        //ADD END OF GAME FUNCTION
+        endGame();
         return;
       }
 
@@ -456,8 +452,7 @@ function checkForSetsOrAddLine() {
         console.log("usedCardCounter: " + usedCardCounter);
         console.log(virtualSetTable);
 
-        //REMOVE ONCE TESTING IS COMPLETE
-        endOfGame = true;
+        endGame();
       }
     }
   }
@@ -472,6 +467,10 @@ function renderSetTable() {
   var rowsToAdd = "";
   var setCardImg;
   var cardCounter = document.getElementById("cardCounter");
+
+  if (endOfGame) {
+    return;
+  }
 
   for (var x = 0; x < virtualSetTable.length; x++) {
     rowsToAdd += `
@@ -531,7 +530,7 @@ function renderSetTable() {
     }
   }
 
-  cardCounter.innerHTML = `: ${81 - usedCardCounter}`;
+  cardCounter.innerText = `:${81 - usedCardCounter}`;
   setContainer.innerHTML = `${rowsToAdd}`;
 }
 
@@ -603,6 +602,52 @@ function cardWasClicked(rowPos, colPos) {
   //alert("number of clicked cards is: " + clickedCardHTMLList.length);
 }
 
+//TIMER
+
+function startTimer() {
+  var timerElement = document.getElementById("timer");
+
+  var elapsedTime = -1;
+
+  function updateTimer() {
+    elapsedTime++;
+
+    var currentMinute = Math.floor(elapsedTime / 60);
+    var currentSecond = elapsedTime % 60;
+
+    var minuteString = currentMinute.toString().padStart(2, "0");
+    var secondString = currentSecond.toString().padStart(2, "0");
+
+    timerElement.innerText = minuteString + ":" + secondString;
+
+    if (!endOfGame) {
+      setTimeout(updateTimer, 1000);
+    } else {
+      timerElement.innerText = "";
+    }
+  }
+
+  updateTimer();
+}
+
+//END GAME
+function endGame() {
+  var setCardsContainer = document.getElementById("setCardsContainer");
+  var endGameTime = document.getElementById("timer").innerText;
+  const clearCardCounter = (document.getElementById("cardCounter").innerHTML =
+    "");
+
+  setCardsContainer.innerHTML = `
+  <div class="endOfGame">
+  <p class="endFoundAll">Found All Sets!</p>
+  <div id="endOfGameTime">Time: ${endGameTime}</div>
+  <button onclick="shuffleCards()" class="newGameButton">New Game</button>
+  </div>
+  `;
+
+  endOfGame = true;
+}
+
 // SETCARDS ARRAY TESTING
 
 function returnSpecificCard(arrId) {
@@ -671,11 +716,4 @@ function janet(games) {
 createSetCards();
 console.log("Set Cards Created");
 
-createVirtualSetTable();
-console.log("Set Table Created");
-
 shuffleCards();
-
-function testClick(number) {
-  alert("hi");
-}
