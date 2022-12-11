@@ -144,6 +144,8 @@ body {
     .setCard {
         height: 100px;
     }
+
+    .setCardsContainer {padding: 5px 0 5px 0;}
 }
 
 
