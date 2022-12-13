@@ -634,7 +634,7 @@ function startTimer() {
 function endGame() {
   var setCardsContainer = document.getElementById("setCardsContainer");
   var endGameTime = document.getElementById("timer").innerText;
-  var previousBestTime = localStorage.getItem("bestTime");
+  var previousBestTime = localStorage.getItem("bestTimeV2");
   var bestTimeElement = "";
 
   const clearCardCounter = (document.getElementById("cardCounter").innerHTML =
@@ -679,24 +679,24 @@ function testHighScore(endGameTime) {
 }
 
 function resetBestTime() {
-  localStorage.removeItem("bestTime");
+  localStorage.removeItem("bestTimeV2");
 }
 
 function updateBestTime(endGameTime) {
   var bestTime;
 
-  if (localStorage.getItem("bestTime")) {
-    bestTime = localStorage.getItem("bestTime");
+  if (localStorage.getItem("bestTimeV2")) {
+    bestTime = localStorage.getItem("bestTimeV2");
   } else {
     bestTime = 999999;
   }
 
   endGameTime =
-    parseFloat(endGameTime.split(":")[0]) * 60 +
+    parseFloat(endGameTime.split(":")[0]) * 100 +
     parseFloat(endGameTime.split(":")[1]);
 
   if (endGameTime < bestTime) {
-    localStorage.setItem("bestTime", endGameTime);
+    localStorage.setItem("bestTimeV2", endGameTime);
 
     localStorage.setItem(
       "bestTimeDate",
