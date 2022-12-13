@@ -5,6 +5,23 @@ body {
     padding: 0;
 }
 
+button {
+ border-style: solid;
+ border-width: 3px;
+ border-radius: 25px;
+ border-color: whitesmoke;
+ background-color: rgba(255, 222, 173, 0);
+ color: whitesmoke;
+ padding: 10px 30px;
+ font-family: 'Poppins', sans-serif;
+ font-size: 20px;
+ background-color: rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: rgb(58, 58, 255);
+}
+
 .gameContainer {
     margin-right: auto;
     margin-left: auto;
@@ -96,7 +113,7 @@ body {
 .cardIsClicked {
     border-style: solid;
     border-width: 5px;
-    border-color: rgb(58, 58, 255);
+    border-color: rgb(70, 70, 252);
 }
 
 .endOfGame {
@@ -108,27 +125,38 @@ body {
 
 .endFoundAll {
     text-align: center;
+    font-size: 30px;
+    margin-bottom: 5px;
 }
 
 #endOfGameTime {
     text-align: center;
 }
 
-.newGameButton {
- border-style: solid;
- border-width: 3px;
- border-radius: 5px;
- border-color: whitesmoke;
- background-color: rgba(255, 222, 173, 0);
- color: whitesmoke;
- padding: 5px;
- font-family: 'Poppins', sans-serif;
- font-size: 15px;
- margin-top: 50px;
+.bestTime {
+    display: inline-block;
+    margin-top: 80px;
+    max-width: auto;
+    font-size: 20px;
 }
 
-.newGameButton:hover {
-    background-color: rgb(58, 58, 255);
+#bestTimeDate {
+    text-align: left;
+    text-decoration: underline;
+    color: rgba(255, 255, 255, 0.50);
+    font-size: 14px;
+}
+
+.newGameButton {
+    margin-top: 100px;
+    padding: 10px 15%;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    color: grey;
+    font-size: 13px;
 }
 
 @media screen and (min-width: 400px) {

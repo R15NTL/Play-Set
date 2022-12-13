@@ -634,18 +634,95 @@ function startTimer() {
 function endGame() {
   var setCardsContainer = document.getElementById("setCardsContainer");
   var endGameTime = document.getElementById("timer").innerText;
+  var previousBestTime = localStorage.getItem("bestTime");
+  var bestTimeElement = "";
+
   const clearCardCounter = (document.getElementById("cardCounter").innerHTML =
     "");
+
+  if (updateBestTime(endGameTime)) {
+    bestTimeElement = `
+        <div class="newBestTime">New Best time!</div>
+      `;
+    if (previousBestTime != null) {
+      previousBestTime = convertToMMSS(previousBestTime);
+      bestTimeElement += `<div class="bestTime">Previous Best Time: ${previousBestTime}
+      <div id=bestTimeDate> ${localStorage.getItem("bestTimeDate")}</div>
+      </div>
+      `;
+    }
+  } else {
+    previousBestTime = convertToMMSS(previousBestTime);
+    bestTimeElement = `<div class="bestTime">Best Time: ${previousBestTime}
+    <div id=bestTimeDate> ${localStorage.getItem("bestTimeDate")}</div>
+    </div>
+    `;
+  }
 
   setCardsContainer.innerHTML = `
   <div class="endOfGame">
   <p class="endFoundAll">Found All Sets!</p>
   <div id="endOfGameTime">Time: ${endGameTime}</div>
+  <div>${bestTimeElement}</div>
   <button onclick="shuffleCards()" class="newGameButton">New Game</button>
   </div>
   `;
 
   endOfGame = true;
+}
+
+function testHighScore(endGameTime) {
+  var x = endGameTime;
+  x = 1;
+
+  console.log("x is: " + x);
+}
+
+function resetBestTime() {
+  localStorage.removeItem("bestTime");
+}
+
+function updateBestTime(endGameTime) {
+  var bestTime;
+
+  if (localStorage.getItem("bestTime")) {
+    bestTime = localStorage.getItem("bestTime");
+  } else {
+    bestTime = 999999;
+  }
+
+  endGameTime =
+    parseFloat(endGameTime.split(":")[0]) * 60 +
+    parseFloat(endGameTime.split(":")[1]);
+
+  if (endGameTime < bestTime) {
+    localStorage.setItem("bestTime", endGameTime);
+
+    localStorage.setItem(
+      "bestTimeDate",
+      `${new Date().getDate()}.${
+        new Date().getMonth() + 1
+      }.${new Date().getFullYear()}`
+    );
+    console.log(
+      "saved best time date: " + localStorage.getItem("bestTimeDate")
+    );
+
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function convertToMMSS(time) {
+  const minutes = Math.floor(time / 100);
+  const seconds = time % 100;
+
+  const minutesString = minutes.toString().padStart(2, "0");
+  const secondsString = seconds.toString().padStart(2, "0");
+
+  const output = `${minutesString}:${secondsString}`;
+  return output;
 }
 
 // SETCARDS ARRAY TESTING
@@ -692,7 +769,9 @@ function janet(games) {
   var numberOfGamesPlayed = 0;
 
   for (var janetGames = 0; janetGames < games; janetGames++) {
-    shuffleCards();
+    if (janetGames != 0) {
+      shuffleCards();
+    }
     while (endOfGame == false) {
       consoleFindSet(
         hint[0].row,
