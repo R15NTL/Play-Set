@@ -676,7 +676,7 @@ function endGame() {
 
   if (localStorage.getItem("bestTimeV2")) {
     bestTimeElement += `
-    <p id=resetMessage>Unfortunately due to technical difficulties your previous best time was reset.</p>
+    <p id=resetMessage>Unfortunately, due to technical difficulties your previous best time was reset.</p>
     `;
     localStorage.removeItem("bestTimeV2");
   }
