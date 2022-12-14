@@ -6,22 +6,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Play-Set</title>
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
       rel="stylesheet"
     />
-    <link rel="preload" as="image" href="images/setcards/empty_diamond.png" />
-    <link rel="preload" as="image" href="images/setcards/empty_oval.png" />
-    <link rel="preload" as="image" href="images/setcards/empty_snake.png" />
-    <link rel="preload" as="image" href="images/setcards/shaded_diamond.png" />
-    <link rel="preload" as="image" href="images/setcards/shaded_oval.png" />
-    <link rel="preload" as="image" href="images/setcards/shaded_snake.png" />
-    <link rel="preload" as="image" href="images/setcards/shaded_diamond.png" />
-    <link rel="preload" as="image" href="images/setcards/solid_diamond.png" />
-    <link rel="preload" as="image" href="images/setcards/solid_oval.png" />
-    <link rel="preload" as="image" href="images/setcards/solid_snake.png" />
   </head>
   <body>
     <div class="gameContainer" id="gameContainer">
@@ -39,8 +29,21 @@
       <div class="setCardsContainer" id="setCardsContainer">
         <!-- testing -->
       </div>
+      <div id="hintContainer"></div>
     </div>
-    <footer>v2</footer>
+    <footer>
+      <div id="preloadCardImgs">
+        <img class="hiddenCardImg" src="images/setcards/empty_diamond.png" />
+        <img class="hiddenCardImg" src="images/setcards/empty_oval.png" />
+        <img class="hiddenCardImg" src="images/setcards/empty_snake.png" />
+        <img class="hiddenCardImg" src="images/setcards/shaded_diamond.png" />
+        <img class="hiddenCardImg" src="images/setcards/shaded_oval.png" />
+        <img class="hiddenCardImg" src="images/setcards/shaded_snake.png" />
+        <img class="hiddenCardImg" src="images/setcards/solid_diamond.png" />
+        <img class="hiddenCardImg" src="images/setcards/solid_oval.png" />
+        <img class="hiddenCardImg" src="images/setcards/solid_snake.png" />
+      </div>
+    </footer>
     <script src="app.js"></script>
   </body>
 </html>

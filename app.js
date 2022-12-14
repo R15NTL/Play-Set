@@ -3,7 +3,10 @@
 var setCards = [];
 
 var endOfGame = false;
+
 var hint = [];
+var hintButtonTimer = 0;
+var hintTimer;
 
 var usedCardCounter = 0;
 var virtualSetTable = [];
@@ -530,6 +533,20 @@ function renderSetTable() {
     }
   }
 
+  let removeHintButton = document.getElementById("hintContainer");
+  removeHintButton.innerHTML = ``;
+  hintButtonTimer = 0;
+
+  clearInterval(hintTimer);
+
+  hintTimer = setInterval(function () {
+    hintButtonTimer++;
+    if (hintButtonTimer === 60 && !endOfGame) {
+      showHintButton();
+      clearInterval(hintTimer);
+    }
+  }, 1000);
+
   cardCounter.innerText = `:${81 - usedCardCounter}`;
   setContainer.innerHTML = `${rowsToAdd}`;
 }
@@ -633,8 +650,8 @@ function startTimer() {
 //END GAME
 function endGame() {
   var setCardsContainer = document.getElementById("setCardsContainer");
-  var endGameTime = document.getElementById("timer").innerText;
-  var previousBestTime = localStorage.getItem("bestTimeV2");
+  var endGameTime = `${document.getElementById("timer").innerText}`;
+  var previousBestTime = localStorage.getItem("bestTimeV3");
   var bestTimeElement = "";
 
   const clearCardCounter = (document.getElementById("cardCounter").innerHTML =
@@ -645,18 +662,23 @@ function endGame() {
         <div class="newBestTime">New Best time!</div>
       `;
     if (previousBestTime != null) {
-      previousBestTime = convertToMMSS(previousBestTime);
       bestTimeElement += `<div class="bestTime">Previous Best Time: ${previousBestTime}
       <div id=bestTimeDate> ${localStorage.getItem("bestTimeDate")}</div>
       </div>
       `;
     }
   } else {
-    previousBestTime = convertToMMSS(previousBestTime);
     bestTimeElement = `<div class="bestTime">Best Time: ${previousBestTime}
     <div id=bestTimeDate> ${localStorage.getItem("bestTimeDate")}</div>
     </div> 
     `;
+  }
+
+  if (localStorage.getItem("bestTimeV2")) {
+    bestTimeElement += `
+    <p id=resetMessage>Unfortunately due to technical difficulties your previous best time was reset.</p>
+    `;
+    localStorage.removeItem("bestTimeV2");
   }
 
   setCardsContainer.innerHTML = `
@@ -668,35 +690,45 @@ function endGame() {
   </div>
   `;
 
+  clearInterval(hintTimer);
   endOfGame = true;
 }
 
-function testHighScore(endGameTime) {
-  var x = endGameTime;
-  x = 1;
-
-  console.log("x is: " + x);
-}
-
 function resetBestTime() {
-  localStorage.removeItem("bestTimeV2");
+  localStorage.removeItem("bestTimeV3");
 }
 
-function updateBestTime(endGameTime) {
+function updateBestTime(currentTime) {
   var bestTime;
 
-  if (localStorage.getItem("bestTimeV2")) {
-    bestTime = localStorage.getItem("bestTimeV2");
+  const currentMinutes = parseFloat(currentTime.split(":")[0]);
+  const currentSeconds = parseFloat(currentTime.split(":")[1]);
+
+  if (localStorage.getItem("bestTimeV3")) {
+    bestTime = localStorage.getItem("bestTimeV3");
   } else {
-    bestTime = 999999;
+    bestTime = `9999:99`;
   }
 
-  endGameTime =
-    parseFloat(endGameTime.split(":")[0]) * 100 +
-    parseFloat(endGameTime.split(":")[1]);
+  const bestMinutes = parseFloat(bestTime.split(":")[0]);
+  const bestSeconds = parseFloat(bestTime.split(":")[1]);
 
-  if (endGameTime < bestTime) {
-    localStorage.setItem("bestTimeV2", endGameTime);
+  console.log(
+    "currentMinutes: " +
+      currentMinutes +
+      " currentSeconds: " +
+      currentSeconds +
+      " bestMinutes: " +
+      bestMinutes +
+      " bestSeconds: " +
+      bestSeconds
+  );
+
+  if (
+    currentMinutes < bestMinutes ||
+    (currentMinutes == bestMinutes && currentSeconds < bestSeconds)
+  ) {
+    localStorage.setItem("bestTimeV3", currentTime);
 
     localStorage.setItem(
       "bestTimeDate",
@@ -704,26 +736,31 @@ function updateBestTime(endGameTime) {
         new Date().getMonth() + 1
       }.${new Date().getFullYear()}`
     );
-    console.log(
-      "saved best time date: " + localStorage.getItem("bestTimeDate")
-    );
-
     return true;
   } else {
     return false;
   }
 }
 
-function convertToMMSS(time) {
-  const minutes = Math.floor(time / 100);
-  //prettier-ignore
-  const seconds = time - (minutes * 100);
+//HINTS
 
-  const minutesString = minutes.toString().padStart(2, "0");
-  const secondsString = seconds.toString().padStart(2, "0");
+function showHintButton() {
+  var hintButtonContainer = document.getElementById("hintContainer");
+  hintButtonContainer.innerHTML = `
+  <button onclick="showHint()" id="hintButton">Hint</button>`;
+}
 
-  const output = `${minutesString}:${secondsString}`;
-  return output;
+function showHint() {
+  var setCardHTMLList = document.getElementsByClassName("setCard");
+
+  let removeHintButton = document.getElementById("hintContainer");
+  removeHintButton.innerHTML = ``;
+
+  for (var card = 0; card <= 2; card++) {
+    setCardHTMLList[hint[card].row * 3 + hint[card].col].classList.add(
+      "hintCard"
+    );
+  }
 }
 
 // SETCARDS ARRAY TESTING
