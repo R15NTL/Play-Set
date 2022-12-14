@@ -655,7 +655,7 @@ function endGame() {
     previousBestTime = convertToMMSS(previousBestTime);
     bestTimeElement = `<div class="bestTime">Best Time: ${previousBestTime}
     <div id=bestTimeDate> ${localStorage.getItem("bestTimeDate")}</div>
-    </div>
+    </div> 
     `;
   }
 
@@ -716,7 +716,8 @@ function updateBestTime(endGameTime) {
 
 function convertToMMSS(time) {
   const minutes = Math.floor(time / 100);
-  const seconds = time % 100;
+  //prettier-ignore
+  const seconds = time - (minutes * 100);
 
   const minutesString = minutes.toString().padStart(2, "0");
   const secondsString = seconds.toString().padStart(2, "0");
