@@ -1,4 +1,4 @@
-# Set: The card game
+# Play Set: The card game
 
 ### Description
 Set is a captivating card game designed with vanilla JavaScript, where the objective is to detect sets from a 4x3 grid of cards. A set is defined as three cards where for each attribute, they are either all identical or completely unique. Your skills are put to the test as the game operates on a timer and even keeps track of your high scores, saving them locally!
